@@ -1,6 +1,6 @@
 import { Entity } from './entity.js';
 
-const timeToAim = 8;
+const timeToAim = 5;
 
 export class Player extends Entity{
     isAlive;
@@ -34,6 +34,9 @@ export class Player extends Entity{
     }
 
     update(deltaTime) {
+        if (!this.isAlive) {
+            return;
+        }
         if (this.aiming && this.precision < this.maxPrecision()) {
             if (this.precision === 0) {
                 this.precision = this.minPrecision;
@@ -44,14 +47,22 @@ export class Player extends Entity{
         this.aimUi.textContent = `${Math.floor(this.precision)}%`;
     }
 
-    startAim() {        
+    startAim() {     
+        if (!this.isAlive) {
+            return;
+        }   
         this.aiming = true;
     }
 
     shoot() {
-        if (!this.canShoot()) {
+        if (!this.isAlive) {
             return;
         }
+        if (!this.canShoot()) {
+            return;
+        }        
+        this.zombie.shot(this.precision);
+
         this.aiming = false;
         this.precision = 0;
         this.logger.shout('Boom!!!');

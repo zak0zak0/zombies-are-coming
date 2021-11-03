@@ -5,7 +5,7 @@ export class Zombie extends Entity {
     speed;
     position;
     player;
-    health = new ZombieHealth();
+    status = new ZombieHealth();
 
     prevTens;
     currTensShown = false;
@@ -26,6 +26,11 @@ export class Zombie extends Entity {
     }
 
     update(deltaTime) {
+        if (this.status.health <= 0) {
+            this.logger.blood('Zombie is dead');
+            return;
+        }
+
         if (this.position < 0) {
             return;
         }
@@ -37,7 +42,8 @@ export class Zombie extends Entity {
         this.position -= this.speed * deltaTime;
         if (this.closeEnough()) {
             this.attack(this.player);
-            this.position = 0;
+            this.position = -1;
+            this.logger.blood('Zombie is eating you!');
         }
        
         super.update(deltaTime);
@@ -48,8 +54,21 @@ export class Zombie extends Entity {
     }
 
     attack(player) {
+        if (this.status.health <= 0) { 
+            return;
+        }
+
         if (player.isAlive) {
             player.kill();
         }
+    }
+
+    shot(precision) {
+        var chance = Math.random() * 100;
+        if (chance > precision) {
+            this.logger.info('miss...');
+            return;
+        }
+        this.logger.blood('hit!');
     }
 }
