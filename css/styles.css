@@ -1,0 +1,61 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    max-width: 760px;
+    min-width: 540px;
+    position: relative;    
+    margin: auto;
+    min-height: 350px;
+    height: 450px;
+    padding: 20px;
+}
+
+.status-log {
+    border: 1px black solid;
+    padding: 10px;
+    font-size: 12px;
+    font-family: monospace;
+    width: 33%;
+    position: relative;
+    float: left;
+    height: 100%;
+    overflow-y: scroll;
+    background-color: #fee;
+}
+
+#zombieLog {
+    float: right;
+}
+
+.status-log > div {
+    margin-top: 10px;
+}
+
+.status-log .status-log-message {
+    
+}
+
+.status-log .status-log-blood {
+    font-weight: bold;
+    color: red;
+}
+
+.status-log .status-log-shout {
+    font-size: large;
+    text-transform: uppercase;
+}
+
+.status-log .status-log-info {
+    font-style: italic;
+    color: gray;
+}

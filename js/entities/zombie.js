@@ -8,16 +8,19 @@ export class Zombie extends Entity {
     prevTens;
     currTensShown = false;
 
-    constructor(player, speed = 1.3, position = 100) {
+    logger;
+
+    constructor(player, logger, speed = 1.3, position = 100) {
         super();
         this.speed = speed;
         this.position = position;
         this.player = player;
         this.prevTens = Math.floor(this.position / 10);
+        this.logger = logger;
     }
 
     start() {
-        console.log(`Zombie position: ${Math.floor(this.position)}`);
+        this.logger.message(`Zombie is ${Math.floor(this.position)} meters away`);
     }
 
     update(deltaTime) {
@@ -25,14 +28,14 @@ export class Zombie extends Entity {
             return;
         }
         if (Math.floor(this.position / 10) < this.prevTens && this.position % 10 < 1) {
-            console.log(`Zombie position: ${Math.floor(this.position)}`);
+            this.logger.message(`Zombie is ${Math.floor(this.position)} meters away`);
             this.prevTens = Math.floor(this.position / 10);
         }
 
         this.position -= this.speed * deltaTime;
         if (this.closeEnough()) {
             this.attack(this.player);
-            this.position = -1;
+            this.position = 0;
         }
        
         super.update(deltaTime);

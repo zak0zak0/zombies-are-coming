@@ -1,7 +1,13 @@
-import { Zombie } from './zombie.js';
-import { Player } from './player.js';
-const player = new Player();
-const  zombie = new Zombie(player);
+import { Zombie } from './entities/zombie.js';
+import { Player } from './entities/player.js';
+import { StatusLogger } from './logger/status-logger.js';
+
+const playerLog = document.getElementById('playerLog');
+const zombieLog = document.getElementById('zombieLog');
+
+
+const player = new Player(new StatusLogger(playerLog));
+const  zombie = new Zombie(player, new StatusLogger(zombieLog));
 
 const entities = [player, zombie];
 
