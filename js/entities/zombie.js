@@ -1,9 +1,11 @@
 import { Entity } from "./entity.js";
+import { ZombieHealth } from './zombie-health.js';
 
 export class Zombie extends Entity {
     speed;
     position;
     player;
+    health = new ZombieHealth();
 
     prevTens;
     currTensShown = false;
