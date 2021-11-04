@@ -30,9 +30,9 @@ export class ZombieHealth {
     body = new BodyPart('zombie', [
         new BodyPart('body', null, 45),
         new BodyPart('head', null, 5),
-        new BodyPart('arm_right', null, 11),
-        new BodyPart('arm_left', null, 11),
-        new BodyPart('leg_right', null, 14),
-        new BodyPart('leg_left', null, 14),
+        new BodyPart('right arm', null, 11),
+        new BodyPart('left arm', null, 11),
+        new BodyPart('right leg', null, 14),
+        new BodyPart('left leg', null, 14),
     ], 100);
 }

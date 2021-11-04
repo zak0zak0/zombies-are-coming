@@ -27,7 +27,6 @@ export class Zombie extends Entity {
 
     update(deltaTime) {
         if (this.status.health <= 0) {
-            this.logger.blood('Zombie is dead');
             return;
         }
 
@@ -64,11 +63,28 @@ export class Zombie extends Entity {
     }
 
     shot(precision) {
+        if (this.status.health <= 0) {
+            return;
+        }
+
         var chance = Math.random() * 100;
         if (chance > precision) {
             this.logger.info('miss...');
             return;
         }
-        this.logger.blood('hit!');
+        const part = this.status.body.parts[Math.floor(Math.random() * this.status.body.parts.length)];
+        if (part.name === 'head') {
+            this.logger.blood('Headshot!');
+            this.status.health -= 50;
+            this.speed *= 0.5;            
+        } else {
+            this.status.health -= 20;
+            this.logger.blood(`You hit ${part.name}!`);
+        }
+
+        if (this.status.health <= 0) {
+            this.logger.blood('Zombie is dead')
+            this.speed = 0;
+        }
     }
 }

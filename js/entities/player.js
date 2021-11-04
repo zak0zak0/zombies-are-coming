@@ -11,7 +11,10 @@ export class Player extends Entity{
     precision = 0;
     minPrecision = 10;
 
+    rounds = 6;
+
     aiming = false;
+    reloading = false;
 
     constructor(logger) {
         super();
@@ -51,6 +54,10 @@ export class Player extends Entity{
         if (!this.isAlive) {
             return;
         }   
+        if (this.reloading) {
+            this.logger.info("Can't aim while reloading...");
+            return;
+        }
         this.aiming = true;
     }
 
@@ -62,7 +69,7 @@ export class Player extends Entity{
             return;
         }        
         this.zombie.shot(this.precision);
-
+        this.rounds -= 1;
         this.aiming = false;
         this.precision = 0;
         this.logger.shout('Boom!!!');
@@ -73,7 +80,33 @@ export class Player extends Entity{
             this.logger.message("Can't shoot! Need to aim");
             return false;
         }
+        if (this.rounds == 0) {
+            this.logger.info("Click!");
+            this.logger.message("Need to reload...");
+            return false;
+        }
         return true;        
+    }
+
+    reload() {
+        if (this.reloading) {
+            this.logger.info('Reloading is already in progress.');
+            return;
+        }
+        if (this.aiming && this.rounds < 6) {
+            this.aiming = false;
+        }
+        if (this.rounds == 6) {
+            this.logger.message('Ammo is full');
+            return;
+        }
+        this.reloading = true;
+        this.precision = 0;
+        setTimeout(() => {
+            this.reloading = false;
+            this.rounds += 1;
+            this.logger.message('Loaded 1 round');
+        }, 1000);
     }
 
     maxPrecision() {

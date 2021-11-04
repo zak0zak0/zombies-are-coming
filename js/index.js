@@ -6,12 +6,17 @@ const playerLog = document.getElementById('playerLog');
 const zombieLog = document.getElementById('zombieLog');
 const aimUi = document.getElementById('aimUi');
 const btnAim = document.getElementById('btnAim');
+const btnShoot = document.getElementById('btnShoot');
+const btnReload = document.getElementById('btnReload');
 
 btnAim.addEventListener('click', () => {
     player.startAim();
 });
 btnShoot.addEventListener('click', () => {
     player.shoot();
+});
+btnReload.addEventListener('click', () => {
+    player.reload();
 });
 
 const player = new Player(new StatusLogger(playerLog));
