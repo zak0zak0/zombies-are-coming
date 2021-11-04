@@ -16,7 +16,8 @@ body {
     position: relative;    
     margin: auto;
     min-height: 350px;
-    height: 450px;
+    max-height: 400px;
+    height: 100%;
     padding: 20px;
 }
 
